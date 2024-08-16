@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esports Tournament Organizer</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Orbitron', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #0b0c10;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        header, footer {
+            background-color: #1f2833;
+            color: #66fcf1;
+            text-align: center;
+            padding: 15px 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            z-index: 1;
+        }
+
+        main {
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        section {
+            background-color: #1f2833;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(0, 255, 255, 0.5);
+            margin-bottom: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        section:hover {
+            transform: scale(1.02);
+            box-shadow: 0px 0px 40px rgba(102, 252, 241, 0.8);
+        }
+
+        h2 {
+            border-bottom: 3px solid #66fcf1;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        input, button {
+            padding: 12px;
+            margin-top: 10px;
+            width: 100%;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+        }
+
+        input {
+            background-color: #0b0c10;
+            color: #fff;
+            border: 1px solid #66fcf1;
+        }
+
+        button {
+            background-color: #66fcf1;
+            color: #1f2833;
+            text-transform: uppercase;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a29e;
+            transform: translateY(-3px);
+        }
+
+        .tournament-card {
+            background-color: #0b0c10;
+            border: 1px solid #66fcf1;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .tournament-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 0px 20px rgba(102, 252, 241, 0.8);
+        }
+
+        .tournament-card h3 {
+            margin: 0;
+            margin-bottom: 10px;
+            color: #66fcf1;
+        }
+
+        .tournament-card p {
+            margin: 5px 0;
+        }
+
+        /* Neon Text Animation */
+        .neon-text {
+            font-size: 40px;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 
+                0 0 5px #fff,
+                0 0 10px #66fcf1,
+                0 0 15px #66fcf1,
+                0 0 20px #66fcf1,
+                0 0 25px #66fcf1,
+                0 0 30px #66fcf1;
+            animation: neon-glow 1.5s infinite alternate;
+        }
+
+        @keyframes neon-glow {
+            from {
+                text-shadow: 
+                    0 0 5px #fff,
+                    0 0 10px #66fcf1,
+                    0 0 15px #66fcf1,
+                    0 0 20px #66fcf1,
+                    0 0 25px #66fcf1,
+                    0 0 30px #66fcf1;
+            }
+            to {
+                text-shadow: 
+                    0 0 20px #fff,
+                    0 0 30px #66fcf1,
+                    0 0 40px #66fcf1,
+                    0 0 50px #66fcf1,
+                    0 0 60px #66fcf1,
+                    0 0 70px #66fcf1;
+            }
+        }
+
+        /* Particle Background Animation */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: radial-gradient(circle, #1f2833 10%, transparent 10%),
+                        radial-gradient(circle, #1f2833 10%, transparent 10%);
+            background-position: 0 0, 50px 50px;
+            background-size: 100px 100px;
+            animation: particle-animation 10s infinite linear;
+        }
+
+        @keyframes particle-animation {
+            from {
+                background-position: 0 0, 50px 50px;
+            }
+            to {
+                background-position: 100px 100px, 150px 150px;
+            }
+        }
+
+        /* Animated Hover Effect for Create/Manage Buttons */
+        .admin-option {
+            background-color: #0b0c10;
+            border: 2px solid #66fcf1;
+            color: #66fcf1;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .admin-option:hover {
+            background-color: #1f2833;
+            transform: scale(1.1);
+            box-shadow: 0px 0px 20px rgba(102, 252, 241, 0.8);
+        }
+
+        /* Hide sections initially */
+        #admin-dashboard, #admin-create-tournament, #admin-manage-tournaments {
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="particles"></div>
+
+<header>
+    <div class="neon-text">Esports Tournament Organizer</div>
+</header>
+
+<main>
+    <!-- Tournaments Section -->
+    <section id="tournaments">
+        <h2>Available Tournaments</h2>
+        <!-- Tournament listings will be dynamically inserted here -->
+    </section>
+
+    <!-- Admin Dashboard Section -->
+    <section id="admin-dashboard">
+        <h2>Admin Dashboard</h2>
+
+        <!-- Create Tournament Option -->
+        <div class="admin-option" onclick="toggleSection('admin-create-tournament')">
+            Create Tournament
+        </div>
+
+        <section id="admin-create-tournament">
+            <h3>Create Tournament</h3>
+            <input type="text" id="tournamentName" placeholder="Tournament Name">
+            <input type="date" id="tournamentDate" placeholder="Tournament Date">
+            <input type="number" id="tournamentSlots" placeholder="Total Slots">
+            <input type="number" id="entryFee" placeholder="Entry Fee">
+            <button onclick="createTournament()">Create Tournament</button>
+        </section>
+
+        <!-- Manage Tournaments Option -->
+        <div class="admin-option" onclick="toggleSection('admin-manage-tournaments')">
+            Manage Tournaments
+        </div>
+
+        <section id="admin-manage-tournaments">
+            <h3>Manage Tournaments</h3>
+            <div id="admin-tournaments">
+                <!-- Admin tournament listings will be dynamically inserted here -->
+            </div>
+        </section>
+    </section>
+
+    <!-- Admin Login Section -->
+    <section id="admin-login">
+        <h2>Admin Login</h2>
+        <input type="text" id="adminId" placeholder="Admin ID">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="adminLogin()">Login</button>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2024 Esports Tournament Organizer</p>
+</footer>
+
+<script>
+    // Display all tournaments on page load
+    window.onload = function() {
+        displayTournaments();
+    }
+
+    // Admin Login Function
+    function adminLogin() {
+        const adminId = document.getElementById('adminId').value;
+        const password = document.getElementById('password').value;
+
+        if (adminId !== 'correctAdminId' || password !== 'correctPassword') {
+            alert('Suspicious login detected.');
+        } else {
+            const otp = prompt('Enter OTP:');
+            if (otp === '1234') {
+                alert('Login successful!');
+                document.getElementById('admin-dashboard').style.display = 'block';
+                document.getElementById('admin-login').style.display = 'none';
+                displayAdminTournaments();
+            } else {
+                alert('Incorrect OTP.');
+            }
+        }
+    }
+
+    // Toggle visibility of Create/Manage sections
+    function toggleSection(sectionId) {
+        const section = document.getElementById(sectionId);
+        section.style.display = section.style.display === 'none' ? 'block' : 'none';
+    }
+
+    // Create Tournament Function (Admin)
+    function createTournament() {
+        const name = document.getElementById('tournamentName').value;
+        const date = document.getElementById('tournamentDate').value;
+        const slots = document.getElementById('tournamentSlots').value;
+        const fee = document.getElementById('entryFee').value;
+
+        const tournaments = JSON.parse(localStorage.getItem('tournaments')) || [];
+        tournaments.push({
+            id: tournaments.length + 1,
+            name,
+            date,
+            slots: parseInt(slots),
+            fee: parseFloat(fee),
+            participants: []
+        });
+
+        localStorage.setItem('tournaments', JSON.stringify(tournaments));
+        displayTournaments();
+        displayAdminTournaments();
+    }
+
+    // Display Tournaments for Users
+    function displayTournaments() {
+        const tournaments = JSON.parse(localStorage.getItem('tournaments')) || [];
+        const tournamentSection = document.getElementById('tournaments');
+        tournamentSection.innerHTML = '';
+
+        tournaments.forEach(tournament => {
+            tournamentSection.innerHTML += `
+                <div class="tournament-card">
+                    <h3>${tournament.name}</h3>
+                    <p>Date: ${tournament.date}</p>
+                    <p>Slots Available: ${tournament.slots - tournament.participants.length}/${tournament.slots}</p>
+                    <p>Entry Fee: $${tournament.fee.toFixed(2)}</p>
+                    <button onclick="joinTournament(${tournament.id})">Join</button>
+                </div>
+            `;
+        });
+    }
+
+    // Display Tournaments for Admin
+    function displayAdminTournaments() {
+        const tournaments = JSON.parse(localStorage.getItem('tournaments')) || [];
+        const adminTournamentSection = document.getElementById('admin-tournaments');
+        adminTournamentSection.innerHTML = '';
+
+        tournaments.forEach(tournament => {
+            adminTournamentSection.innerHTML += `
+                <div class="tournament-card">
+                    <h3>${tournament.name}</h3>
+                    <p>Date: ${tournament.date}</p>
+                    <p>Slots Available: ${tournament.slots - tournament.participants.length}/${tournament.slots}</p>
+                    <p>Participants: ${tournament.participants.join(', ')}</p>
+                    <button onclick="deleteTournament(${tournament.id})">Delete</button>
+                </div>
+            `;
+        });
+    }
+
+    // Join Tournament Function (User)
+    function joinTournament(tournamentId) {
+        const inGameName = prompt('Enter your in-game username:');
+        const tournaments = JSON.parse(localStorage.getItem('tournaments')) || [];
+        const tournament = tournaments.find(t => t.id === tournamentId);
+
+        if (tournament.participants.length < tournament.slots) {
+            tournament.participants.push(inGameName);
+            localStorage.setItem('tournaments', JSON.stringify(tournaments));
+            alert('You have successfully joined the tournament!');
+            displayTournaments();
+            displayAdminTournaments();
+        } else {
+            alert('Sorry, no slots available.');
+        }
+    }
+
+    // Delete Tournament Function (Admin)
+    function deleteTournament(tournamentId) {
+        let tournaments = JSON.parse(localStorage.getItem('tournaments')) || [];
+        tournaments = tournaments.filter(t => t.id !== tournamentId);
+        localStorage.setItem('tournaments', JSON.stringify(tournaments));
+        displayTournaments();
+        displayAdminTournaments();
+    }
+</script>
+
+</body>
+</html>
